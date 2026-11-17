@@ -1,4 +1,5 @@
 import {officialThemes,shortcuts,REPO,themeFile,parseThemeFile,issueTheme,issueUrl} from './themes.mjs';
+import {updateDownloadSection} from './releases.mjs';
 const $=s=>document.querySelector(s);
 const node=(tag,className,text)=>{const el=document.createElement(tag);if(className)el.className=className;if(text!==undefined)el.textContent=text;return el;};
 let filter='all',community=[],page=1,more=false,communityLoaded=false,communityError='',loading=false,currentTheme=null;
@@ -18,5 +19,5 @@ document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',
 $('#share-theme').addEventListener('click',()=>$('#share-dialog').showModal());$('#privacy-button').addEventListener('click',()=>$('#privacy-dialog').showModal());
 $('#share-form').addEventListener('submit',async event=>{event.preventDefault();const status=$('#share-status'),file=$('#share-file').files[0],button=$('#share-form button[type=submit]');button.disabled=true;try{if(!file||!file.name.toLowerCase().endsWith('.mptheme')||file.size>5*1024*1024)throw new Error('5MB 이하의 .mptheme 파일을 선택하세요.');if(!$('#share-consent').checked)throw new Error('공개 공유에 동의해 주세요.');const theme=parseThemeFile(await file.text(),$('#share-name').value,$('#share-description').value);const link=node('a','text-link','GitHub 작성 화면 열기 ↗');link.href=issueUrl(theme);link.target='_blank';link.rel='noopener noreferrer';status.replaceChildren(document.createTextNode('색상 설정을 추출했습니다. 다음 링크에서 내용을 확인하고 게시하세요. '),link);}catch(error){status.textContent=error.message;}finally{button.disabled=false;}});
 $('#copy-checksum').addEventListener('click',async()=>{try{await navigator.clipboard.writeText($('#checksum').value);$('#copy-status').textContent='SHA-256을 복사했습니다.';}catch{$('#checksum').select();$('#copy-status').textContent='위 값을 선택했습니다. Ctrl+C로 복사하세요.';}});
-fetch('release.json').then(r=>{if(!r.ok)throw new Error('metadata');return r.json();}).then(r=>{$('#checksum').value=r.installer.sha256;$('#installer-meta').textContent=`Windows 10 / 11 · 64-bit · ${(r.installer.bytes/1048576).toFixed(1)} MB`;}).catch(()=>{$('#copy-status').textContent='파일 정보는 GitHub 릴리스의 SHA256SUMS.txt에서 확인하세요.';$('#copy-checksum').disabled=true;});
+void updateDownloadSection();
 $('#year').textContent=new Date().getFullYear();renderThemes();renderShortcuts();

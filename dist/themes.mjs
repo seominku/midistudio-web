@@ -1,6 +1,5 @@
 // Only scalar color settings cross the community boundary. No paths, scripts or images.
 export const REPO = 'seominku/midistudio-web';
-export const RELEASE = '2.0.0';
 export const officialThemes = [
   {id:'night-shift',name:'Night Shift',description:'깊은 차콜과 라임. 늦은 밤에도 선명한 아이디어.',category:'dark',gradient:true,start:'#10180f',end:'#253729',accent:'#c4f553',bg:.08,text:.94,rounding:5,panelalpha:.96,direction:2,strength:1},
   {id:'deep-ocean',name:'Deep Ocean',description:'차분한 심해의 블루와 시원한 청록빛 포인트.',category:'dark',gradient:true,start:'#0b1b2b',end:'#164c62',accent:'#65d6db',bg:.09,text:.94,rounding:6,panelalpha:.94,direction:2,strength:1},

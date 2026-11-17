@@ -1,9 +1,12 @@
 import {mkdir,writeFile,readFile,copyFile,stat} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import path from 'node:path';
-import {officialThemes,themeFile,shortcuts,RELEASE} from '../dist/themes.mjs';
+import {officialThemes,themeFile,shortcuts} from '../dist/themes.mjs';
+import {checkedVersion} from '../dist/releases.mjs';
 const app=process.argv[2];
 if(!app)throw new Error('Usage: node scripts/prepare-content.mjs <MidiStudio project path>');
+const versionHeader=await readFile(path.join(app,'src/gui/ReleaseNotes.h'),'utf8');
+const RELEASE=checkedVersion(versionHeader.match(/kAppVersion\s*=\s*"([^"]+)"/)?.[1]);
 await mkdir('dist/themes',{recursive:true});await mkdir('dist/downloads',{recursive:true});
 for(const theme of officialThemes)await writeFile(`dist/themes/${theme.id}.mptheme`,themeFile(theme));
 const release={version:RELEASE,platform:'Windows 10+ x64',installer:null,portable:null};

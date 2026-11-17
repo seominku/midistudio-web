@@ -1,0 +1,10 @@
+import {writeFile} from 'node:fs/promises';
+import {releaseFromGitHub,latestApi} from '../dist/releases.mjs';
+const headers={Accept:'application/vnd.github+json'};
+if(process.env.GITHUB_TOKEN)headers.Authorization=`Bearer ${process.env.GITHUB_TOKEN}`;
+const response=await fetch(latestApi,{headers,signal:AbortSignal.timeout(20000)});
+if(!response.ok)throw new Error(`Latest release lookup failed: HTTP ${response.status}`);
+const manifest=releaseFromGitHub(await response.json());
+await writeFile('dist/release.json',JSON.stringify(manifest,null,2)+'\n');
+await writeFile('dist/downloads/SHA256SUMS.txt',[manifest.installer,manifest.portable].map(a=>`${a.sha256}  ${a.name}`).join('\n')+'\n');
+console.log(`Verified published release v${manifest.version}; refreshed site metadata.`);

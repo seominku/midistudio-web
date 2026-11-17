@@ -3,7 +3,7 @@
 MidiStudio 2.0.0의 한국어 소개·배포·단축키·테마 커뮤니티 웹사이트입니다.
 
 - 공개 GitHub Pages: https://seominku.github.io/midistudio-web/
-- 설치/포터블 배포: https://github.com/seominku/midistudio-web/releases/tag/v2.0.0
+- 설치/포터블 배포: https://github.com/seominku/midistudio-web/releases/latest
 - 기술: 빌드 없는 HTML/CSS/ES Modules. Node 22+로 테스트. 런타임 라이브러리, 광고/분석 추적, 비밀키 없음.
 - `dist/`는 배포할 완성 파일이며 GitHub Actions가 테스트 후 Pages에 자동 배포합니다.
 - 기존 MidiStudio 앱 소스 및 사용자 프로필은 이 저장소에 포함하지 않습니다.
@@ -17,13 +17,15 @@ npm test
 
 미리보기: http://127.0.0.1:3940
 
-## 앱 버전 업데이트
+## 앱 버전 업데이트 (자동)
 
-1. 실제 앱과 설치 프로그램을 빌드·검증합니다. 웹사이트가 앱을 자동 빌드하지는 않습니다.
-2. `dist/themes.mjs`의 RELEASE, 화면 표시 버전/릴리스 링크를 갱신합니다.
-3. `node scripts/prepare-content.mjs <MidiStudio 소스 폴더>`로 공개 사용법·치트시트·SHA-256을 갱신합니다.
-4. GitHub Release에 정확히 같은 설치 파일과 ZIP, `dist/downloads/SHA256SUMS.txt`를 올립니다.
-5. 테스트 후 main에 push하면 GitHub Pages가 갱신됩니다. Sites 사본은 Sites 워크플로로 별도 동기화·배포합니다.
+앱 프로젝트에서 `powershell.exe -NoProfile -File scripts/release.ps1`을 실행합니다. 앱 빌드·테스트 → Inno Setup 설치 파일 → 휴대용 ZIP → 버전/ZIP 내용/SHA-256 검증 → GitHub 초안에 업로드 → 모든 업로드 검증 후 정식 공개까지 이어집니다. `package.ps1`도 기본적으로 설치 파일을 만들고 게시합니다. 개발 중 임시 패키지만 `-LocalOnly`를 사용합니다. 웹사이트가 C++ 앱을 원격 빌드하는 것은 아닙니다.
+
+두 공개 사이트는 `dist/releases.mjs`에서 GitHub 최신 **공개 정식 릴리스**를 조회합니다. 버전, 용량, 버전별 고정 다운로드 링크와 해당 SHA-256을 한 번에 반영합니다. 초안·사전 버전·검증되지 않은 파일·다른 호스트 URL을 거절합니다. API 장애 시 해시는 숨기고, 최신 별칭 링크를 유지해 이전 버전의 해시가 새 파일에 잘못 연결되지 않도록 합니다. 브라우저에는 GitHub 토큰을 넣지 않습니다.
+
+JavaScript가 꺼져 있어도 설치 파일과 포터블 링크는 최신 정식 릴리스의 `MidiStudio-Setup.exe` / `MidiStudio-Portable.zip`을 가리킵니다. 사용법은 `MidiStudio-Guide.md` 별칭을 사용합니다. 원래 버전별 파일도 함께 보존합니다. 이미 공개된 같은 버전의 파일은 덮어쓰지 않으며 바뀐 빌드에는 새 버전이 필요합니다. 네트워크 실패 후 동일 산출물로 재실행하면 초안의 누락 업로드만 재개합니다.
+
+GitHub Pages는 main push 및 release published 이벤트, 수동 실행 시 테스트 후 `scripts/sync-release.mjs`로 검증된 최신 메타데이터를 갱신하여 배포합니다. 사이트에 버전을 하드코딩하거나 릴리스마다 소스를 커밋할 필요가 없습니다. GitHub 릴리스가 바뀌면 Sites 사본의 다운로드도 자동으로 바뀌므로 설치 파일 업데이트에는 별도 Sites 재배포가 필요 없습니다. 디자인/기능 소스 변경은 기존의 두 사이트 배포 흐름을 따릅니다.
 
 ## 테마 커뮤니티
 

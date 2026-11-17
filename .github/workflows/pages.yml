@@ -3,11 +3,13 @@ on:
   push:
     branches: [main]
   pull_request:
+  release:
+    types: [published]
   workflow_dispatch:
 permissions:
   contents: read
 concurrency:
-  group: pages-${{ github.ref }}
+  group: pages-${{ github.event_name == 'pull_request' && github.ref || 'production' }}
   cancel-in-progress: true
 jobs:
   test:
@@ -23,6 +25,7 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     permissions:
+      contents: read
       pages: write
       id-token: write
     environment:
@@ -30,6 +33,15 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v6
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Refresh verified latest release metadata
+        run: node scripts/sync-release.mjs
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4
         with:
