@@ -1,0 +1,16 @@
+{
+  "version": "2.0.0",
+  "platform": "Windows 10+ x64",
+  "installer": {
+    "name": "MidiStudio-Setup-2.0.0.exe",
+    "bytes": 4177583,
+    "sha256": "D14E965900AE16E751A8C86B9A88DEA9AE7A1C6AADB9C4A7DDAF19889F541BC7",
+    "url": "https://github.com/seominku/midistudio-web/releases/download/v2.0.0/MidiStudio-Setup-2.0.0.exe"
+  },
+  "portable": {
+    "name": "MidiStudio-2.0.0.zip",
+    "bytes": 2545810,
+    "sha256": "4F8472C07609E680771E5AD9CBB2EFAE03E29ECD4A31E0128DDE42F46C77EFF6",
+    "url": "https://github.com/seominku/midistudio-web/releases/download/v2.0.0/MidiStudio-2.0.0.zip"
+  }
+}

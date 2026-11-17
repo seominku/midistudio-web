@@ -1,0 +1,24 @@
+MidiStudio 2.0.0 — 주요 단축키
+
+Space                  재생 / 정지
+R                      MIDI 녹음
+Shift + R              오디오 녹음
+Ctrl + S               프로젝트 저장
+Ctrl + O               프로젝트 열기
+Ctrl + E               오디오 내보내기
+Ctrl + Space           처음으로 / 정지
+Shift + Space          현재 마디 처음부터 재생
+M                      메트로놈 켜기 / 끄기
+L                      루프 켜기 / 끄기
+Q                      퀀타이즈
+Ctrl + Z               실행 취소
+Ctrl + Y               다시 실행
+Ctrl + C / V           복사 / 붙여넣기
+Ctrl + D               복제
+Ctrl + M               병합
+Del                    선택 삭제
+Shift + Del            구간 삭제 후 당겨 붙이기
+F1                     단축키 도움말
+Shift + 드래그            노브 미세 조절
+
+편집 단축키는 포커스된 편집기에 적용됩니다. 전체 목록은 앱에서 F1.
